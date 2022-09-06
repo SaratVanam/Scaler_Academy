@@ -8,6 +8,9 @@ public class Solution {
             if(set.contains(B+A[i])){
                 return 1;
             }
+            if(set.contains(A[i]-B)){
+                return 1;
+            }
             if(!set.contains(A[i])){
                 set.add(A[i]);
             }
