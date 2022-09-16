@@ -5,7 +5,7 @@ public class Solution {
         int n = A.length;
         int l=0;
         int r = n-1;
-        for(int i=0;i<n;){
+        for(int i=0;i<=r;){
             if(A[i]==0){
                 int temp =A[i];
                 A[i]=A[l];
@@ -13,7 +13,7 @@ public class Solution {
                 ++l;
                 ++i;
             }
-            else if(A[i]==2 && i<r){
+            else if(A[i]==2){
                 int temp = A[i];
                 A[i]=A[r];
                 A[r]=temp;
