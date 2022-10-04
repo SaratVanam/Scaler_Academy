@@ -4,15 +4,15 @@ public class Solution {
     public int[] solve(int[][] A, int[] B, int[] C, int[] D, int[] E) {
         int n=A.length;
         int m=A[0].length;
-        int[][] psum= new int[n][m];
+        long[][] psum= new long[n][m];
         int mod=1000000007;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(j==0){
-                    psum[i][j]=(psum[i][j]+A[i][j])%mod;
+                    psum[i][j]=(psum[i][j])+(A[i][j])%mod;
                 }
                 else {
-                    psum[i][j]=(psum[i][j]+A[i][j]+psum[i][j-1])%mod;
+                    psum[i][j]=(psum[i][j])+(A[i][j]+psum[i][j-1])%mod;
                 }
             }
         }
@@ -20,13 +20,13 @@ public class Solution {
         for(int j=0;j<m;j++){
             for(int i=0;i<n;i++){
                 if(i>0){
-                    psum[i][j]=(psum[i][j]+psum[i-1][j])%mod;
+                    psum[i][j]=(psum[i][j])+(psum[i-1][j])%mod;
                 }
             }
         }
         int ans[] = new int[B.length];
         for(int i=0;i<B.length;i++){
-            int sum=0;
+            long sum=0;
             int TL[]={B[i],C[i]};
             int BR[]={D[i],E[i]};
             int a1=TL[0]-1;
@@ -43,8 +43,12 @@ public class Solution {
             if(a1>0 && b1>0){
                 sum=(sum+psum[a1-1][b1-1])%mod;
             }
-            ans[i]=sum%mod;
+            while(sum<0){
+                sum+=mod;
+            }
+            ans[i]=(int) sum %mod;
         }
         return ans;
     }
 }
+
