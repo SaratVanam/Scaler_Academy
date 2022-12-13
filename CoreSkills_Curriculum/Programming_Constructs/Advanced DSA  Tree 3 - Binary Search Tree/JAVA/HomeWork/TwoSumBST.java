@@ -12,36 +12,44 @@
  * }
  */
 
- //O(N) TC
+// O(N) TC O(H) SC
 public class Solution {
     public int t2Sum(TreeNode A, int B) {
-        HashSet<Integer> set = new HashSet<>();
-        if(check(A,B,set)){
-            return 1;
+        Stack<TreeNode> max = new Stack<>();
+        Stack<TreeNode> min = new Stack<>();
+        TreeNode left=A;
+        TreeNode right= A;
+        while(left!=null){
+            min.push(left);
+            left=left.left;
+        }
+        while(right!=null){
+            max.push(right);
+            right=right.right;
+        }
+        left=min.pop();
+        right=max.pop();
+        while(left!=null && right!=null && left!=right){
+            if(left.val+right.val>B){
+                right=right.left;
+                while(right!=null){
+                    max.push(right);
+                    right=right.right;
+                }
+                right=max.pop();
+            }
+            else if(left.val+right.val<B){
+                left=left.right;
+                while(left!=null){
+                    min.push(left);
+                    left=left.left;
+                }
+                left=min.pop();
+            }
+            else{
+                return 1;
+            }
         }
         return 0;
-    }
-
-    public boolean check(TreeNode A, int B, HashSet<Integer> set){
-        if(A==null){
-            return false;
-        }
-        if(!set.contains(B-A.val)){
-            set.add(A.val);
-        }
-        else{
-            return true;
-        }
-        if(!check(A.left,B,set)){
-            if(check(A.right,B,set)){
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else{
-            return true;
-        }
     }
 }
